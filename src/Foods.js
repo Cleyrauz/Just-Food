@@ -10,7 +10,7 @@ const Foods = (props) => {
             <li key={item.id} className="liFoods">
               <img
                 className="foodImg"
-                src={require(`./images/${item.image}`)}
+                src={require(`../src/images/${item.image}`)}
                 alt={item.name}
               />
               <div className="foodItem">

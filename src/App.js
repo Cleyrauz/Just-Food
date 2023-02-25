@@ -1,5 +1,7 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, {Fragment, useState} from "react";
+import Foods from "./Foods";
+
 const App = () => {
     const [menuItems, setMenuItems] = useState([
     {
@@ -35,19 +37,28 @@ const App = () => {
       image: "ic.jpg",
     },
   ]);
- return (
+  const [isChooseFoodPage, setIsChooseFoodPage] = useState(false);
+  return (
     <div className="App">
+      <button className="toggleButton" onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}>
+        {isChooseFoodPage ? "Availability Check" : "Order Food"}
+      </button>
       <h3 className="title">Just Food Online Shop</h3>
-      <h4 className="subTitle">Menu Availability</h4>
-      <ul className="ulApp">
-        {menuItems.map((item) => {
-          return (
-            <li key={item.id} className="liApp">
-              {item.name} - {item.quantity}
-            </li>
-          );
-        })}
-      </ul>
+      {!isChooseFoodPage && (
+        <Fragment>
+          <h4 className="subTitle">Menu Availability</h4>
+          <ul className="ulApp">
+            {menuItems.map((item) => {
+              return (
+                <li key={item.id} className="liApp">
+                  {item.name} - {item.quantity}
+                </li>
+              );
+            })}
+          </ul>
+        </Fragment>
+      )}
+      {isChooseFoodPage && <Foods foodItems={menuItems}></Foods>}
     </div>
   );
 };
