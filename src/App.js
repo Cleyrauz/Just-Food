@@ -1,10 +1,10 @@
 import "./App.css";
-import React, {Fragment, useState} from "react";
+import React, { Fragment, useState } from "react";
 import Foods from "./Foods";
-
-export const foodItemsContext = React.createContext;
+export const foodItemsContext = React.createContext();
 const App = () => {
-    const [menuItems, setMenuItems] = useState([
+  const [isChooseFoodPage, setIsChooseFoodPage] = useState(false);
+  const [menuItems, setMenuItems] = useState([
     {
       id: 1,
       name: "Chicken Burger",
@@ -17,7 +17,7 @@ const App = () => {
       id: 2,
       name: "Veg Burger",
       quantity: 30,
-      desc: "Plant-based burger - lettuce, tomato, vegan cheese and mayonnaise",
+      desc: "Plant-based burger — lettuce, tomato, vegan cheese and mayonnaise",
       price: "22",
       image: "vb.jpg",
     },
@@ -38,12 +38,15 @@ const App = () => {
       image: "ic.jpg",
     },
   ]);
-  const [isChooseFoodPage, setIsChooseFoodPage] = useState(false);
+
 
   return (
     <foodItemsContext.Provider value={menuItems}>
     <div className="App">
-      <button className="toggleButton" onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}>
+      <button
+        className="toggleButton"
+        onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}
+      >
         {isChooseFoodPage ? "Availability Check" : "Order Food"}
       </button>
       <h3 className="title">Just Food Online Shop</h3>
@@ -61,9 +64,15 @@ const App = () => {
           </ul>
         </Fragment>
       )}
-      {isChooseFoodPage && <Foods foodItems={menuItems}></Foods>}
+      {isChooseFoodPage && (
+        <Foods
+          foodItems={menuItems}
+        
+        ></Foods>
+      )}
     </div>
     </foodItemsContext.Provider>
   );
 };
+
 export default App;

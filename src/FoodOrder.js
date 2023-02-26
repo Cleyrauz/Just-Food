@@ -1,5 +1,6 @@
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useState } from "react";
 import "./FoodOrder.css";
+import { useContext } from "react";
 import { foodItemsContext } from "./App";
 
 const FoodOrder = (props) => {
@@ -7,19 +8,21 @@ const FoodOrder = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [totalAmount, setTotalAmount] = useState(selectedFood.price);
   const [isOrdered, setIsOrdered] = useState(false);
+  const menuItems = useContext(foodItemsContext);
   const handleQuantityChange = (event) => {
     setTotalAmount(selectedFood.price * event.target.value);
     setQuantity(event.target.value);
   };
+
   const handleClick = () => {
     setIsOrdered(true);
     menuItems.map((item) => {
-        if(item.id === selectedFood.id) {
-            item.quantity = item.quantity - quantity;
-        }
+      if (item.id === selectedFood.id) {
+        item.quantity = item.quantity - quantity;
+      }
     });
   };
-  const menuItems = useContext(foodItemsContext);
+
 
   return (
     <Fragment>
@@ -47,6 +50,7 @@ const FoodOrder = (props) => {
             onChange={handleQuantityChange}
           />
         </li>
+
         <li className="liDetails">
           <label for="name"></label>
           <input
@@ -67,6 +71,7 @@ const FoodOrder = (props) => {
             placeholder="Your mobile number"
           />
         </li>
+
         <li>
           <button className="btn btnOrder" onClick={handleClick}>
             Submit Order
@@ -83,7 +88,8 @@ const FoodOrder = (props) => {
           </li>
         )}
       </ul>
-   </Fragment>
+    </Fragment>
   );
 };
+
 export default FoodOrder;
