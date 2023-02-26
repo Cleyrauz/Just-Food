@@ -38,6 +38,18 @@ const App = () => {
     },
   ]);
   const [isChooseFoodPage, setIsChooseFoodPage] = useState(false);
+  const updateMenuItemQuantity = (id, orderQuantity) => {
+    const updatedMenuItems = menuItems.map((item) => {
+      if (item.id === id)
+      return {
+        ...item,
+        quantity: item.quantity - orderQuantity,
+      };
+      return item;
+    });
+    setMenuItems(updatedMenuItems);
+  };
+
   return (
     <div className="App">
       <button className="toggleButton" onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}>
@@ -58,7 +70,7 @@ const App = () => {
           </ul>
         </Fragment>
       )}
-      {isChooseFoodPage && <Foods foodItems={menuItems}></Foods>}
+      {isChooseFoodPage && <Foods foodItems={menuItems} updateQuantity={updateMenuItemQuantity}></Foods>}
     </div>
   );
 };
