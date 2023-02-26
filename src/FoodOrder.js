@@ -1,5 +1,6 @@
-import React, {Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import "./FoodOrder.css";
+import { foodItemsContext } from "./App";
 
 const FoodOrder = (props) => {
   const selectedFood = props.food;
@@ -12,8 +13,13 @@ const FoodOrder = (props) => {
   };
   const handleClick = () => {
     setIsOrdered(true);
-    props.updateQuantity(selectedFood.id, quantity);
+    menuItems.map((item) => {
+        if(item.id === selectedFood.id) {
+            item.quantity = item.quantity - quantity;
+        }
+    });
   };
+  const menuItems = useContext(foodItemsContext);
 
   return (
     <Fragment>

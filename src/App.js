@@ -2,6 +2,7 @@ import "./App.css";
 import React, {Fragment, useState} from "react";
 import Foods from "./Foods";
 
+export const foodItemsContext = React.createContext;
 const App = () => {
     const [menuItems, setMenuItems] = useState([
     {
@@ -38,19 +39,9 @@ const App = () => {
     },
   ]);
   const [isChooseFoodPage, setIsChooseFoodPage] = useState(false);
-  const updateMenuItemQuantity = (id, orderQuantity) => {
-    const updatedMenuItems = menuItems.map((item) => {
-      if (item.id === id)
-      return {
-        ...item,
-        quantity: item.quantity - orderQuantity,
-      };
-      return item;
-    });
-    setMenuItems(updatedMenuItems);
-  };
 
   return (
+    <foodItemsContext.Provider value={menuItems}>
     <div className="App">
       <button className="toggleButton" onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}>
         {isChooseFoodPage ? "Availability Check" : "Order Food"}
@@ -70,8 +61,9 @@ const App = () => {
           </ul>
         </Fragment>
       )}
-      {isChooseFoodPage && <Foods foodItems={menuItems} updateQuantity={updateMenuItemQuantity}></Foods>}
+      {isChooseFoodPage && <Foods foodItems={menuItems}></Foods>}
     </div>
+    </foodItemsContext.Provider>
   );
 };
 export default App;
