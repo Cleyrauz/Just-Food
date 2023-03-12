@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import "./FoodOrder.css";
 import { useContext } from "react";
 import { foodItemsContext } from "./App";
+import ErrorFunctionalBoundary from "./ErrorFunctionalBoundary";
 
 const FoodOrder = (props) => {
   const selectedFood = props.food;
@@ -9,9 +10,21 @@ const FoodOrder = (props) => {
   const [totalAmount, setTotalAmount] = useState(selectedFood.price);
   const [isOrdered, setIsOrdered] = useState(false);
   const menuItems = useContext(foodItemsContext);
-  const handleQuantityChange = (event) => {
+  const [isErrorCatched, setIsErrorCatched] = useState(false);
+
+  const handleQuantityChange = (event) => 
+  {
+      try
+    {
     setTotalAmount(selectedFood.price * event.target.value);
     setQuantity(event.target.value);
+  }
+    catch {
+      setIsErrorCatched(true);
+    }
+//     console.log(`The price of the selected food is ${selectedFood.price}`);
+// console.table(selectedFood);
+// console.log(`The total price  is ${selectedFood.price* event.target.value}`);
   };
 
   const handleClick = () => {
@@ -26,6 +39,8 @@ const FoodOrder = (props) => {
 
   return (
     <Fragment>
+      {!isErrorCatched && (
+        <Fragment>
       <h4 className="selFoodTitle">{selectedFood.name}</h4>
       <img
         className="selFoodImg"
@@ -47,6 +62,8 @@ const FoodOrder = (props) => {
             className="quantity"
             min="1"
             max="10"
+            // Code to throw an error
+            // onChange={handleQuantityChange()}
             onChange={handleQuantityChange}
           />
         </li>
@@ -89,7 +106,10 @@ const FoodOrder = (props) => {
         )}
       </ul>
     </Fragment>
+      )}
+      {isErrorCatched && 
+      <ErrorFunctionalBoundary />}
+    </Fragment>
   );
-};
-
+}
 export default FoodOrder;

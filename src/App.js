@@ -1,6 +1,8 @@
 import "./App.css";
 import React, { Fragment, useState } from "react";
 import Foods from "./Foods";
+import styled from "styled-components";
+
 export const foodItemsContext = React.createContext();
 const App = () => {
   const [isChooseFoodPage, setIsChooseFoodPage] = useState(false);
@@ -38,17 +40,30 @@ const App = () => {
       image: "ic.jpg",
     },
   ]);
-
+  const StyledtoggleButton = styled.button`
+  float: left;
+  margin: 5px 0px 0px 3px;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  color: #fff;
+  background-color: #367af6;
+  cursor: pointer;
+`;
 
   return (
     <foodItemsContext.Provider value={menuItems}>
     <div className="App">
-      <button
-        className="toggleButton"
-        onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}
-      >
-        {isChooseFoodPage ? "Availability Check" : "Order Food"}
-      </button>
+    <button
+          style={{  float: 'left',  marginTop: '5px', marginLeft: '3px',  alignItems: 'center', paddingTop:'6px', paddingRight: '14px',    borderRadius: 8,  border: 'none',  color: '#fff',  backgroundColor: 'red',   cursor: 'pointer' }}
+          onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}
+        >{isChooseFoodPage ? "Availability Check" : "Order Food"}</button>
+        <button
+          style={toggleButtonStyles}
+          onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}>
+          {isChooseFoodPage ? "Availability Check" : "Order Food"}
+        </button>
       <h3 className="title">Just Food Online Shop</h3>
       {!isChooseFoodPage && (
         <Fragment>
