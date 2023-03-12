@@ -39,6 +39,10 @@ const App = () => {
       image: "ic.jpg",
     },
   ]);
+  const isLapOrDeskTop = useMediaQuery({
+    query: "(min-width: 1224px)",
+  });
+  const isMobile = useMediaQuery({ query: "(max-width: 480px "});
 
   return (
     <foodItemsContext.Provider value={menuItems}>
