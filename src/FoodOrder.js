@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import "./FoodOrder.css";
+import foodOrderStyles from "./FoodOrder.module.css";
 import { useContext } from "react";
 import { foodItemsContext } from "./App";
 import ErrorFunctionalBoundary from "./ErrorFunctionalBoundary";
@@ -41,25 +41,25 @@ const FoodOrder = (props) => {
     <Fragment>
       {!isErrorCatched && (
         <Fragment>
-      <h4 className="selFoodTitle">{selectedFood.name}</h4>
+      <h4 className={foodOrderStyles.selFoodTitle}>{selectedFood.name}</h4> 
       <img
-        className="selFoodImg"
+        className={foodOrderStyles.selFoodImg}
         src={require(`./images/${selectedFood.image}`)}
         alt={selectedFood.name}
       />
-      <ul className="ulFoodDetails">
+      <ul className={foodOrderStyles.ulFoodDetails}>
         <li>
-          <p className="selFoodDesc">{selectedFood.desc}</p>
+          <p className={foodOrderStyles.selFoodDesc}>{selectedFood.desc}</p>
         </li>
         <li>
-          <p className="selFoodPrice">{totalAmount}$</p>
+          <p className={foodOrderStyles.selFoodPrice}>{totalAmount}$</p>
         </li>
-        <li className="selQuantity">
+        <li className={foodOrderStyles.selQuantity}>
           <label>Quantity</label>
           <input
             type="number"
             defaultValue={1}
-            className="quantity"
+            className={foodOrderStyles.quantity}
             min="1"
             max="10"
             // Code to throw an error
@@ -68,11 +68,11 @@ const FoodOrder = (props) => {
           />
         </li>
 
-        <li className="liDetails">
+        <li className={foodOrderStyles.liDetails}>
           <label for="name"></label>
           <input
             type="text"
-            className="inputFields"
+            className={foodOrderStyles.inputFields}
             id="name"
             name="name"
             placeholder="Your Name"
@@ -82,7 +82,7 @@ const FoodOrder = (props) => {
           <label for="mobile"></label>
           <input
             type="text"
-            className="inputFields"
+            className={foodOrderStyles.inputFields}
             id="mobile"
             name="mobile"
             placeholder="Your mobile number"
@@ -90,15 +90,15 @@ const FoodOrder = (props) => {
         </li>
 
         <li>
-          <button className="btn btnOrder" onClick={handleClick}>
+          <button className={`${foodOrderStyles.btn} ${foodOrderStyles.btnOrder}`} onClick={handleClick}>
             Submit Order
           </button>
-          <button className="btn btnReturnMenu" onClick={props.returnToMenu}>
+          <button className={`${foodOrderStyles.btn} ${foodOrderStyles.btnReturnMenu}`} onClick={props.returnToMenu}>
             Return to Menu
           </button>
         </li>
         {isOrdered && (
-          <li className="liMessage">
+          <li className={foodOrderStyles.liMessage}>
             <label>
               Order Submitted! You will receive an SMS to once ready for pickup.
             </label>
