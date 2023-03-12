@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import React, { Fragment, useState } from "react";
 import Foods from "./Foods";
 export const foodItemsContext = React.createContext();
