@@ -1,4 +1,4 @@
-import "./App.scss";
+import appStyles from "./App.module.css";
 import React, { Fragment, useState } from "react";
 import Foods from "./Foods";
 export const foodItemsContext = React.createContext();
@@ -42,35 +42,30 @@ const App = () => {
 
   return (
     <foodItemsContext.Provider value={menuItems}>
-    <div className="App">
-      <button
-        className="toggleButton"
-        onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}
-      >
-        {isChooseFoodPage ? "Availability Check" : "Order Food"}
-      </button>
-      <h3 className="title">Just Food Online Shop</h3>
-      {!isChooseFoodPage && (
-        <Fragment>
-          <h4 className="subTitle">Menu Availability</h4>
-          <ul className="ulApp">
-            {menuItems.map((item) => {
-              return (
-                <li key={item.id} className="liApp">
-                  {item.name} - {item.quantity}
-                </li>
-              );
-            })}
-          </ul>
-        </Fragment>
-      )}
-      {isChooseFoodPage && (
-        <Foods
-          foodItems={menuItems}
-        
-        ></Foods>
-      )}
-    </div>
+      <div className={appStyles.App}>
+        <button
+          className={appStyles.toggleButton}
+          onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}
+        >
+          {isChooseFoodPage ? "Availability Check" : "Order Food"}
+        </button>
+        <h3 className={appStyles.title}>Just Food Online Shop</h3>
+        {!isChooseFoodPage && (
+          <>
+            <h4 className={appStyles.subTitle}>Menu Availability</h4>
+            <ul className={appStyles.ulApp}>
+              {menuItems.map((item) => {
+                return (
+                  <li key={item.id} className={appStyles.liApp}>
+                    {item.name} - {item.quantity}
+                  </li>
+                );
+              })}
+            </ul>
+          </>
+        )}
+        {isChooseFoodPage && <Foods foodItems={menuItems}></Foods>}
+      </div>
     </foodItemsContext.Provider>
   );
 };
