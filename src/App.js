@@ -1,6 +1,7 @@
 import appStyles from "./App.module.css";
 import React, { Fragment, useState } from "react";
 import Foods from "./Foods";
+import { useMediaQuery } from "react-responsive";
 export const foodItemsContext = React.createContext();
 const App = () => {
   const [isChooseFoodPage, setIsChooseFoodPage] = useState(false);
@@ -38,7 +39,6 @@ const App = () => {
       image: "ic.jpg",
     },
   ]);
-
 
   return (
     <foodItemsContext.Provider value={menuItems}>
