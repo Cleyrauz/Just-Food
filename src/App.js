@@ -55,15 +55,10 @@ const App = () => {
   return (
     <foodItemsContext.Provider value={menuItems}>
     <div className="App">
-    <button
-          style={{  float: 'left',  marginTop: '5px', marginLeft: '3px',  alignItems: 'center', paddingTop:'6px', paddingRight: '14px',    borderRadius: 8,  border: 'none',  color: '#fff',  backgroundColor: 'red',   cursor: 'pointer' }}
-          onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}
-        >{isChooseFoodPage ? "Availability Check" : "Order Food"}</button>
-        <button
-          style={toggleButtonStyles}
+<StyledtoggleButton
           onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}>
           {isChooseFoodPage ? "Availability Check" : "Order Food"}
-        </button>
+        </StyledtoggleButton>
       <h3 className="title">Just Food Online Shop</h3>
       {!isChooseFoodPage && (
         <Fragment>
