@@ -1,11 +1,16 @@
 import appStyles from "./App.module.css";
-import React, { Fragment, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Foods from "./Foods";
-import { useMediaQuery } from "react-responsive";
+import { auth, logOut } from "./auth/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 export const foodItemsContext = React.createContext();
-u
 const App = () => {
-  const [isChooseFoodPage, setIsChooseFoodPage] = useState(false);
+  const navigate = useNavigate();
+  const [user, loading, error] = useAuthState(auth);
+  const [isChooseFoodPage, setIsChooseFoodPage] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
   const [menuItems, setMenuItems] = useState([
     {
       id: 1,
@@ -40,68 +45,52 @@ const App = () => {
       image: "ic.jpg",
     },
   ]);
-  const isLapOrDeskTop = useMediaQuery({
-    query: "(min-width: 1224px)",
-  });
-  const isMobile = useMediaQuery({ query: "(max-width: 480px "});
-
+  useEffect(() => {
+    if (user) {
+      const user = auth.currentUser;
+      setUserEmail(user.email);
+      if (user.email === "admin@justfood.com") {
+        setIsAdmin(true);
+      }
+    } else {
+      navigate("/");
+    }
+  }, [user, loading]);
   return (
     <foodItemsContext.Provider value={menuItems}>
-      {isMobile && (
-        <div className={appStyles.App}>
+      <div className={appStyles.App}>
+        <button className={appStyles.signOutButton} onClick={logOut}>
+          Sign Out
+        </button>
+        {isAdmin && (
           <button
             className={appStyles.toggleButton}
             onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}
           >
             {isChooseFoodPage ? "Availability Check" : "Order Food"}
           </button>
-          <h3 className={appStyles.titleMobile}>Just Food Online Shop</h3>
-          {!isChooseFoodPage && (
-            <>
-              <h4 className={appStyles.subTitleMobile}>Menu Availability</h4>
-              <ul className={appStyles.ulAppMobile}>
-                {menuItems.map((item) => {
-                  return (
-                    <li key={item.id} className={appStyles.liAppMobile}>
-                      {item.name} - {item.quantity}
-                    </li>
-                  );
-                })}
-              </ul>
-            </>
-          )}
-          {isChooseFoodPage && <Foods foodItems={menuItems}></Foods>}
-        </div>
-      )}
-      {isLapOrDeskTop && (
-        <div className={appStyles.App}>
-          <button
-            className={appStyles.toggleButton}
-            onClick={() => setIsChooseFoodPage(!isChooseFoodPage)}
-          >
-            {isChooseFoodPage ? "Availability Check" : "Order Food"}
-          </button>
-          <h3 className={appStyles.title}>Just Food Online Shop</h3>
-          {!isChooseFoodPage && (
-            <>
-              <h4 className={appStyles.subTitle}>Menu Availability</h4>
-              <ul className={appStyles.ulApp}>
-                {menuItems.map((item) => {
-                  return (
-                    <li key={item.id} className={appStyles.liApp}>
-                      {item.name} - {item.quantity}
-                    </li>
-                  );
-                })}
-              </ul>
-            </>
-          )}
-          {isChooseFoodPage && <Foods foodItems={menuItems}></Foods>}
-        </div>
-      )}
+        )}
+        <span className={appStyles.signedInMessage}>
+          Signed in as {userEmail}
+        </span>
+        <h3 className={appStyles.title}>Just Food Online Shop</h3>
+        {!isChooseFoodPage && (
+          <>
+            <h4 className={appStyles.subTitle}>Menu Availability</h4>
+            <ul className={appStyles.ulApp}>
+              {menuItems.map((item) => {
+                return (
+                  <li key={item.id} className={appStyles.liApp}>
+                    {item.name} - {item.quantity}
+                  </li>
+                );
+              })}
+            </ul>
+          </>
+        )}
+        {isChooseFoodPage && <Foods foodItems={menuItems}></Foods>}
+      </div>
     </foodItemsContext.Provider>
   );
 };
-
 export default App;
-

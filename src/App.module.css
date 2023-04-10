@@ -66,3 +66,20 @@
 .liAppMobile {
   padding-bottom: 30px;
 }
+.signOutButton {
+  float: right;
+  margin: 5px 10px 0px 3px;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  color: #fff;
+  background-color: #367af6;
+  cursor: pointer;
+}
+.signedInMessage
+{
+  color: orange;
+  font-weight: 200;
+  font-size: 16px;
+}
